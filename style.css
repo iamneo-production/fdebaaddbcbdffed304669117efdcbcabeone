@@ -31,3 +31,10 @@ h1 {
     color: #333;
     text-shadow: 0 1px 0 #fff;
   }
+
+  button[disabled] {
+    color: black;
+    cursor: no-drop;
+  }
+
+  
