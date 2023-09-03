@@ -13,4 +13,10 @@ h1 {
     margin: 35px;
   }
 
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   
