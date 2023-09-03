@@ -4,6 +4,7 @@
   <title>Tic Tac Toe</title>
 </head>
 <body>
+  <h1>Tic Tac Toe</h1>
   <table>
     <tr>
       <td></td>
@@ -21,5 +22,69 @@
       <td></td>
     </tr>
   </table>
-</body>
-</html>
+  <div id="result"></div>
+  <button id="reset">Reset</button>
+  <script>
+    const cells = document.querySelectorAll('td');
+    const result = document.getElementById('result');
+    const reset = document.getElementById('reset');
+    let turn = 'X';
+    function handleClick(event) {
+      const cell = event.target;
+      if (cell.innerHTML !== '') {
+        return;
+      }
+      cell.innerHTML = turn;
+      if (checkWinner()) {
+        result.innerHTML = `${turn} wins!`;
+        reset.disabled = false;
+        return;
+      }
+      if (isDraw()) {
+        result.innerHTML = "It's a draw!";
+        reset.disabled = false;
+        return;
+      }
+      turn = turn === 'X' ? 'O' : 'X';
+      result.innerHTML = `${turn}'s turn`;
+    }
+    function checkWinner() {
+      const winningCombinations = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
+      for (const combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if (cells[a].innerHTML === turn && cells[b].innerHTML === turn && cells[c].innerHTML === turn) {
+          return true;
+        }
+      }
+      return false;
+    }
+    function isDraw() {
+      for (const cell of cells) {
+        if (cell.innerHTML === '') {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    for (const cell of cells) {
+  cell.addEventListener('click', handleClick);
+}
+
+reset.addEventListener('click', () => {
+  for (const cell of cells) {
+    cell.innerHTML = '';
+  }
+  result.innerHTML = '';
+  reset.disabled = true;
+  turn = 'X';
+});
